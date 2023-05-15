@@ -1,5 +1,6 @@
-from application.extensions import db
 from sqlalchemy.dialects.postgresql import JSON
+
+from application.extensions import db
 
 
 class DateModel(db.Model):
@@ -60,12 +61,10 @@ class ProvisionReason(DateModel):
 # TODO - does this need a description field?
 dataset_field = db.Table(
     "dataset_field",
-    db.Column(
-        "dataset_id", db.Text, db.ForeignKey("dataset.dataset"), primary_key=True
-    ),
-    db.Column("field_id", db.Text, db.ForeignKey("field.field"), primary_key=True),
-    db.Column(db.Text, "guidance"),
-    db.Column(db.Text, "hint"),
+    db.Column("dataset", db.Text, db.ForeignKey("dataset.dataset"), primary_key=True),
+    db.Column("field", db.Text, db.ForeignKey("field.field"), primary_key=True),
+    db.Column("guidance", db.Text),
+    db.Column("hint", db.Text),
     db.Column("entry_date", db.Date),
     db.Column("start_date", db.Date),
     db.Column("end_date", db.Date),
@@ -86,7 +85,7 @@ specification_dataset = db.Table(
 )
 
 specification_dataset_field = db.Table(
-    "specification_dataset",
+    "specification_dataset_field",
     db.Column("dataset", db.Text, db.ForeignKey("dataset.dataset"), primary_key=True),
     db.Column(
         "specification",
@@ -97,7 +96,7 @@ specification_dataset_field = db.Table(
     db.Column(
         "field", db.Text, db.ForeignKey("specification.specification"), primary_key=True
     ),
-    db.Column(db.Text, "guidance"),
+    db.Column("guidance", db.Text),
 )
 
 typology_field = db.Table(
@@ -139,7 +138,6 @@ class Dataset(DateModel):
     typology = db.relationship("Typology")
     wikidata = db.Column(db.Text)
     wikipedia = db.Column(db.Text)
-
     fields = db.relationship("Field", secondary=dataset_field, lazy="subquery")
 
 
@@ -151,7 +149,6 @@ class Typology(DateModel):
     plural = db.Column(db.Text)
     wikidata = db.Column(db.Text)
     wikipedia = db.Column(db.Text)
-
     fields = db.relationship("Field", secondary=typology_field, lazy="subquery")
 
 
@@ -159,7 +156,6 @@ class Field(DateModel):
     field = db.Column(db.Text, primary_key=True, nullable=False)
     name = db.Column(db.Text)
     datatype_id = db.Column(db.Text, db.ForeignKey("datatype.datatype"), nullable=True)
-
     typologies = db.relationship("Typology", secondary=typology_field, lazy="subquery")
 
 
