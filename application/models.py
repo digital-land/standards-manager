@@ -110,7 +110,7 @@ typology_field = db.Table(
 
 
 class Specification(DateModel):
-    dataset = db.Column(db.Text, primary_key=True)
+    specification = db.Column(db.Text, primary_key=True)
     specification_status_id = db.Column(
         db.Text, db.ForeignKey("specification_status.specification_status")
     )
