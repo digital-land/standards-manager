@@ -8,6 +8,7 @@ import requests
 from flask.cli import AppGroup
 
 from application.extensions import db
+from application.models import Specification
 
 logger = logging.getLogger(__name__)
 info_handler = logging.StreamHandler()
@@ -66,20 +67,63 @@ def load_data():
                                 logger.error(e)
                                 db.session.rollback()
 
-            # load the typology_field table
-            fields_csv = os.path.join(
-                tmp_dir, "specification-main/specification/field.csv"
-            )
-            typology_field = db.metadata.tables["typology_field"]
-            with open(fields_csv) as f:
-                for i, row in enumerate(DictReader(f)):
-                    r = {"field": row["field"], "typology": row["typology"]}
+            # load the typology and specification join tables
+            _load_typology_field(tmp_dir)
+            _load_specification_dataset(tmp_dir)
+
+
+def _load_typology_field(tmp_dir):
+    fields_csv = os.path.join(tmp_dir, "specification-main/specification/field.csv")
+    typology_field = db.metadata.tables["typology_field"]
+    with open(fields_csv) as f:
+        for i, row in enumerate(DictReader(f)):
+            r = {"field": row["field"], "typology": row["typology"]}
+            try:
+                db.session.execute(typology_field.insert(), r)
+                db.session.commit()
+            except Exception as e:
+                logger.error(
+                    f"Error inserting row {i} of field.csv into typology_field"
+                )
+                logger.error(e)
+                db.session.rollback()
+
+
+def _load_specification_dataset(tmp_dir):
+    specification_csv = os.path.join(
+        tmp_dir, "specification-main/specification/specification.csv"
+    )
+    specification_dataset = db.metadata.tables["specification_dataset"]
+    with open(specification_csv) as f:
+        for i, row in enumerate(DictReader(f)):
+            datasets = row["datasets"].split(";")
+            for d in datasets:
+                r = {"specification": row["specification"], "dataset": d}
+                try:
+                    db.session.execute(specification_dataset.insert(), r)
+                    db.session.commit()
+                except Exception as e:
+                    logger.error(
+                        f"Error inserting row {i} of specification.csv into specification_dataset"
+                    )
+                    logger.error(e)
+                    db.session.rollback()
+
+        specification_dataset_field = db.metadata.tables["specification_dataset_field"]
+        for specification in Specification.query.all():
+            for d in specification.datasets:
+                for f in d.fields:
+                    r = {
+                        "specification": specification.specification,
+                        "dataset": d.dataset,
+                        "field": f.field,
+                    }
                     try:
-                        db.session.execute(typology_field.insert(), r)
+                        db.session.execute(specification_dataset_field.insert(), r)
                         db.session.commit()
                     except Exception as e:
                         logger.error(
-                            f"Error inserting row {i} of field.csv into typology_field"
+                            f"Error inserting row {r} into specification_dataset_field"
                         )
                         logger.error(e)
                         db.session.rollback()

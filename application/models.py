@@ -93,9 +93,7 @@ specification_dataset_field = db.Table(
         db.ForeignKey("specification.specification"),
         primary_key=True,
     ),
-    db.Column(
-        "field", db.Text, db.ForeignKey("specification.specification"), primary_key=True
-    ),
+    db.Column("field", db.Text, db.ForeignKey("field.field"), primary_key=True),
     db.Column("guidance", db.Text),
 )
 
@@ -117,6 +115,9 @@ class Specification(DateModel):
         db.Text, db.ForeignKey("specification_status.specification_status")
     )
     # whatever else needed here
+    datasets = db.relationship(
+        "Dataset", secondary=specification_dataset, lazy="subquery"
+    )
 
 
 class Dataset(DateModel):
@@ -151,14 +152,18 @@ class Typology(DateModel):
     plural = db.Column(db.Text)
     wikidata = db.Column(db.Text)
     wikipedia = db.Column(db.Text)
-    fields = db.relationship("Field", secondary=typology_field, lazy="subquery")
+    fields = db.relationship(
+        "Field", secondary=typology_field, lazy="subquery", back_populates="typologies"
+    )
 
 
 class Field(DateModel):
     field = db.Column(db.Text, primary_key=True, nullable=False)
     name = db.Column(db.Text)
     datatype_id = db.Column(db.Text, db.ForeignKey("datatype.datatype"), nullable=True)
-    typologies = db.relationship("Typology", secondary=typology_field, lazy="subquery")
+    typologies = db.relationship(
+        "Typology", secondary=typology_field, lazy="subquery", back_populates="fields"
+    )
 
 
 class Datatype(DateModel):
