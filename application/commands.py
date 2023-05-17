@@ -134,6 +134,7 @@ def drop_data():
     for table in reversed(db.metadata.sorted_tables):
         db.session.execute(table.delete())
         db.session.commit()
+    print("data dropped")
 
 
 def _get_insert_row(table, row):

@@ -114,7 +114,9 @@ class Specification(DateModel):
     specification_status_id = db.Column(
         db.Text, db.ForeignKey("specification_status.specification_status")
     )
-    # whatever else needed here
+    documentation_url = db.Column(db.Text)
+    name = db.Column(db.Text)
+    prefix = db.Column(db.Text)
     datasets = db.relationship(
         "Dataset", secondary=specification_dataset, lazy="subquery"
     )
@@ -160,6 +162,13 @@ class Typology(DateModel):
 class Field(DateModel):
     field = db.Column(db.Text, primary_key=True, nullable=False)
     name = db.Column(db.Text)
+    description = db.Column(db.Text)
+    guidance = db.Column(db.Text)
+    hint = db.Column(db.Text)
+    parent_field = db.Column(db.Text)
+    replacement_field = db.Column(db.Text)
+    uri_template = db.Column(db.Text)
+    wikidata_property = db.Column(db.Text)
     datatype_id = db.Column(db.Text, db.ForeignKey("datatype.datatype"), nullable=True)
     typologies = db.relationship(
         "Typology", secondary=typology_field, lazy="subquery", back_populates="fields"
