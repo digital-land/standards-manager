@@ -20,6 +20,14 @@ logger.addHandler(error_handler)
 
 data_cli = AppGroup("data")
 
+foreign_keys = {
+    "attribution",
+    "datatype",
+    "licence",
+    "specification_status",
+    "typology",
+}
+
 
 @data_cli.command("load")
 def load_data():
@@ -58,6 +66,24 @@ def load_data():
                                 logger.error(e)
                                 db.session.rollback()
 
+            # load the typology_field table
+            fields_csv = os.path.join(
+                tmp_dir, "specification-main/specification/field.csv"
+            )
+            typology_field = db.metadata.tables["typology_field"]
+            with open(fields_csv) as f:
+                for i, row in enumerate(DictReader(f)):
+                    r = {"field": row["field"], "typology": row["typology"]}
+                    try:
+                        db.session.execute(typology_field.insert(), r)
+                        db.session.commit()
+                    except Exception as e:
+                        logger.error(
+                            f"Error inserting row {i} of field.csv into typology_field"
+                        )
+                        logger.error(e)
+                        db.session.rollback()
+
 
 @data_cli.command("drop")
 def drop_data():
@@ -70,6 +96,8 @@ def _get_insert_row(table, row):
     insert_row = {}
     for key, val in row.items():
         k = key.replace("-", "_")
+        if k in foreign_keys and k != table.name:
+            k = f"{k}_id"
         if not val:
             v = None
         else:

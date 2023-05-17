@@ -101,7 +101,9 @@ specification_dataset_field = db.Table(
 
 typology_field = db.Table(
     "typology_field",
-    db.Column("dataset", db.Text, db.ForeignKey("dataset.dataset"), primary_key=True),
+    db.Column(
+        "typology", db.Text, db.ForeignKey("typology.typology"), primary_key=True
+    ),
     db.Column("field", db.Text, db.ForeignKey("field.field"), primary_key=True),
     db.Column("entry_date", db.Date),
     db.Column("start_date", db.Date),
