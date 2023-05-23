@@ -1,14 +1,22 @@
 {% extends "layouts/layout.html" %}
-{% block pageTitle %}Specification service{% endblock %}
+{% block pageTitle %}Standards manager{% endblock %}
 
 {% block content %}
-
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-
-      <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">Specification service</h1>
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">Standards manager</h1>
       <p class="govuk-body-l govuk-!-margin-bottom-6">
-        A tool for managing digital land specifications</p>
+        Technical documentation and guidance.</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li><a href="#">Dataset</a></li>
+          <li><a href="#">Field</a></li>
+          <li><a href="#">Datatype</a></li>
+          <li><a href="#">Typology</a></li>
+          <li><a href="{{url_for('specification.specifications')}}">Specification</a></li>
+        </ul>
+        <p class="govuk-body">
+        Visit our <a href="https://www.planning.data.gov.uk/dataset">datasets</a> pages to see the actual data.
+    </p>
     </div>
   </div>
 {% endblock %}

@@ -36,8 +36,10 @@ def register_blueprints(app):
     """
 
     from application.blueprints.main.views import main
+    from application.blueprints.specification.views import spec
 
     app.register_blueprint(main)
+    app.register_blueprint(spec)
 
 
 def register_context_processors(app):
