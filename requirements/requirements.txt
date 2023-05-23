@@ -4,7 +4,7 @@
 #
 #    pip-compile requirements/requirements.in
 #
-alembic==1.11.0
+alembic==1.11.1
     # via flask-migrate
 blinker==1.6.2
     # via flask
@@ -54,13 +54,13 @@ psycopg2-binary==2.9.6
     # via -r requirements/requirements.in
 python-dotenv==1.0.0
     # via -r requirements/requirements.in
-requests==2.30.0
+requests==2.31.0
     # via -r requirements/requirements.in
-sqlalchemy==2.0.13
+sqlalchemy==2.0.15
     # via
     #   alembic
     #   flask-sqlalchemy
-typing-extensions==4.5.0
+typing-extensions==4.6.0
     # via
     #   alembic
     #   sqlalchemy
