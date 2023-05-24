@@ -10,6 +10,7 @@ def specifications():
     page_data = {
         "title": "Specifications",
         "lede": "Technical specifications to help Local Planning Authorities provide consistent planning data.",
+        "config": {"page_header": True},
     }
     working_drafts = Specification.query.filter(
         Specification.specification_status_id == "working-draft"
@@ -22,4 +23,14 @@ def specifications():
 @spec.route("/<string:specification>/")
 def specification(specification):
     specification = Specification.query.get(specification)
-    return render_template("specification.html", specification=specification)
+    page_data = {
+        "caption": "Specification",
+        "title": specification.name,
+        "lede": "A technical specification for "
+        + specification.name
+        + " planning data",
+        "config": {},
+    }
+    return render_template(
+        "specification.html", specification=specification, page_data=page_data
+    )
