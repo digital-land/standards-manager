@@ -144,7 +144,9 @@ class Dataset(DateModel):
     typology = db.relationship("Typology")
     wikidata = db.Column(db.Text)
     wikipedia = db.Column(db.Text)
-    fields = db.relationship("Field", secondary=dataset_field, lazy="subquery")
+    fields = db.relationship(
+        "Field", secondary=dataset_field, lazy="subquery", order_by="Field.field"
+    )
 
 
 class Typology(DateModel):
@@ -170,6 +172,7 @@ class Field(DateModel):
     replacement_field = db.Column(db.Text)
     uri_template = db.Column(db.Text)
     wikidata_property = db.Column(db.Text)
+    cardinality = db.Column(db.Text)
     datatype_id = db.Column(db.Text, db.ForeignKey("datatype.datatype"), nullable=True)
     typologies = db.relationship(
         "Typology", secondary=typology_field, lazy="subquery", back_populates="fields"

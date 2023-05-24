@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template
 
-from application.models import Specification
+from application.models import Dataset, Specification
 
 spec = Blueprint("specification", __name__, url_prefix="/specification")
 
@@ -34,3 +34,18 @@ def specification(specification):
     return render_template(
         "specification.html", specification=specification, page_data=page_data
     )
+
+@spec.route("/dataset")
+def datasets():
+    page_data = {"title": "Datasets"}
+    return render_template(
+        "datasets.html", datasets=Dataset.query.all(), page_data=page_data
+    )
+
+
+@spec.route("/dataset/<string:dataset>/")
+def dataset(dataset):
+    ds = Dataset.query.get(dataset)
+    page_data = {"title": "Dataset"}
+    return render_template("dataset.html", dataset=ds, page_data=page_data)
+

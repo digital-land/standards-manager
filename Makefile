@@ -49,3 +49,6 @@ upgrade-db:
 
 downgrade-db:
 	flask db downgrade
+
+reload:
+	flask data drop && flask data load
