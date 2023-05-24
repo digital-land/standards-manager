@@ -5,7 +5,7 @@ from application.models import Specification
 spec = Blueprint("specification", __name__, url_prefix="/specification")
 
 
-@spec.route("/specification/")
+@spec.route("/")
 def specifications():
     page_data = {
         "title": "Specifications",
@@ -19,7 +19,7 @@ def specifications():
     )
 
 
-@spec.route("/specification/<string:specification>/")
+@spec.route("/<string:specification>/")
 def specification(specification):
     specification = Specification.query.get(specification)
     return render_template("specification.html", specification=specification)
