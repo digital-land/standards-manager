@@ -114,6 +114,7 @@ class Specification(DateModel):
     specification_status_id = db.Column(
         db.Text, db.ForeignKey("specification_status.specification_status")
     )
+    specification_status = db.relationship("SpecificationStatus")
     documentation_url = db.Column(db.Text)
     name = db.Column(db.Text)
     prefix = db.Column(db.Text)
