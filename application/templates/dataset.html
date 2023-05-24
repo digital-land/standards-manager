@@ -19,9 +19,15 @@
       </thead>
       <tbody class="govuk-table__body">
         {% for field in dataset.fields %}
-        {% set key = True if field.field == dataset.dataset else False %}
         <tr class="govuk-table__row">
-          <td class="govuk-table__cell"><a href="#">{{field.field}}</a>{% if key %}<strong class="govuk-tag govuk-tag--grey">Key</strong>{% endif %}</td>
+          <td class="govuk-table__cell"><a href="#">{{field.field}}</a>
+            {% if field.field == dataset.dataset %}
+              <strong class="govuk-tag govuk-tag--grey">Key</strong>
+            {% endif %}
+            {% if field.end_date %}
+              <strong class="govuk-tag govuk-tag--grey">Deprecated</strong>
+            {% endif %}
+          </td>
           <td class="govuk-table__cell">{{field.name}}</td>
           <td class="govuk-table__cell"><a href="#">{{field.datatype_id}}</a></td>
           <td class="govuk-table__cell">{{field.cardinality}}</td>
