@@ -5,12 +5,12 @@
 
 Create a postgres database for the application
 
-    createdb specification_service
+    createdb standards_manager
 
 
 Create a python virtualenv then run:
 
-    make
+    make init
 
 Copy .env.example to .env
 
@@ -18,9 +18,20 @@ Run any db migations
 
     make upgrade-db
 
+
+Load specification/standards seed data
+
+  flask data load
+
 To run the application run:
 
-    make run
+    flask run
+
+(you may see some errors on console due to inconsistencies in seed data)
+
+If you need to reload seed data run:
+
+  flask data drop && flask data load
 
 
 To create new data migrations:
