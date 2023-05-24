@@ -1,7 +1,6 @@
 {% extends 'layouts/page.html' %}
 
 {% block content_primary %}
-  <h2 id="mandated-standard" class="govuk-heading-m">Datasets</h2>
   <ul class="govuk-list govuk-list--bullet">
     {% for dataset in datasets %}
     <li><a href="{{url_for('specification.dataset', dataset=dataset.dataset)}}">{{dataset.name}}</a></li>
