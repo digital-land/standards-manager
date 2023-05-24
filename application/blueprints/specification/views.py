@@ -7,10 +7,16 @@ spec = Blueprint("specification", __name__, url_prefix="/specification")
 
 @spec.route("/specification/")
 def specifications():
+    page_data = {
+        "title": "Specifications",
+        "lede": "Technical specifications to help Local Planning Authorities provide consistent planning data.",
+    }
     working_drafts = Specification.query.filter(
         Specification.specification_status_id == "working-draft"
     ).all()
-    return render_template("specifications.html", working_drafts=working_drafts)
+    return render_template(
+        "specifications.html", working_drafts=working_drafts, page_data=page_data
+    )
 
 
 @spec.route("/specification/<string:specification>/")

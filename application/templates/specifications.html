@@ -1,15 +1,6 @@
-{% extends 'layouts/layout.html' %}
+{% extends 'layouts/page.html' %}
+{% block content_primary %}
 
-{% block content %}
-  <div class="govuk-grid-row">
-  <div class="govuk-grid-column-full">
-    <span class="govuk-caption-xl"></span>
-    <h1 class="govuk-heading-xl">Specifications</h1>
-    </div>
-  </div>
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-    <p class="govuk-body">Technical specifications to help Local Planning Authorities provide consistent planning data.</p>
     <h2 id="mandated-standard" class="govuk-heading-m">Data standards</h2>
     <p class="govuk-body">The following specifications are mandated as data standards.</p>
     <ul class="govuk-list govuk-list--bullet">
@@ -38,6 +29,4 @@
       <li>Planning application</li>
     </ul>
 
-  </div>
-</div>
 {% endblock %}
