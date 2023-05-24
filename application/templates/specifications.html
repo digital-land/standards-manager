@@ -1,32 +1,32 @@
 {% extends 'layouts/page.html' %}
 {% block content_primary %}
 
-    <h2 id="mandated-standard" class="govuk-heading-m">Data standards</h2>
-    <p class="govuk-body">The following specifications are mandated as data standards.</p>
-    <ul class="govuk-list govuk-list--bullet">
-      <li><a href="https://www.gov.uk/government/publications/brownfield-land-registers-data-standard/publish-your-brownfield-land-data">Brownfield land</a></li>
-    </ul>
+  <h2 id="mandated-standard" class="govuk-heading-m">Data standards</h2>
+  <p class="govuk-body">The following specifications are mandated as data standards.</p>
+  <ul class="govuk-list govuk-list--bullet">
+    <li><a href="https://www.gov.uk/government/publications/brownfield-land-registers-data-standard/publish-your-brownfield-land-data">Brownfield land</a></li>
+  </ul>
 
-    <h2 id="candidate-standard" class="govuk-heading-m">Candidate standards</h2>
-    <p class="govuk-body">The following specifications are being tested with a larger group of users before becoming a data standard.</p>
-    <ul class="govuk-list govuk-list--bullet">
-      <li><a href="https://www.gov.uk/guidance/publish-your-developer-contributions-data">Developer contributions</a></li>
-    </ul>
+  <h2 id="candidate-standard" class="govuk-heading-m">Candidate standards</h2>
+  <p class="govuk-body">The following specifications are being tested with a larger group of users before becoming a data standard.</p>
+  <ul class="govuk-list govuk-list--bullet">
+    <li><a href="https://www.gov.uk/guidance/publish-your-developer-contributions-data">Developer contributions</a></li>
+  </ul>
 
-    <h2 id="working-draft" class="govuk-heading-m">Working drafts</h2>
-    <p class="govuk-body">The following specifications are being developed with a small number of data providers to ensure they work with their processes, are able to represent existing data, and meet the needs of data consumers.</p>
-    <ul class="govuk-list govuk-list--bullet">
-      {% for specification in working_drafts %}
-      <li><a href="{{url_for('specification.specification', specification=specification.    specification)}}">{{specification.name}}</a>
-      </li>
-      {% endfor %}
-    </ul>
+  <h2 id="working-draft" class="govuk-heading-m">Working drafts</h2>
+  <p class="govuk-body">The following specifications are being developed with a small number of data providers to ensure they work with their processes, are able to represent existing data, and meet the needs of data consumers.</p>
+  <ul class="govuk-list govuk-list--bullet">
+    {% for specification in working_drafts %}
+    <li><a href="{{url_for('specification.specification', specification=specification.    specification)}}">{{specification.name}}</a>
+    </li>
+    {% endfor %}
+  </ul>
 
-    <h2 id="discovery" class="govuk-heading-m">In discovery</h2>
-    <p class="govuk-body">The following areas are under research to understand the users and needs for prospective data specifications.</p>
-    <ul class="govuk-list govuk-list--bullet">
-      <li>Local plan</li>
-      <li>Planning application</li>
-    </ul>
+  <h2 id="discovery" class="govuk-heading-m">In discovery</h2>
+  <p class="govuk-body">The following areas are under research to understand the users and needs for prospective data specifications.</p>
+  <ul class="govuk-list govuk-list--bullet">
+    <li>Local plan</li>
+    <li>Planning application</li>
+  </ul>
 
 {% endblock %}
