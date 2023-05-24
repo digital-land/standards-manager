@@ -4,5 +4,6 @@
   "stylesheetsOutputPath": "application/static/stylesheets",
   "watchPaths": "'./assets/scss/**/*.scss' './assets/javascripts/**/*.js'",
   "govukOutputPath": "application/static",
-  "imagesOutputPath": "application/static/images"
+  "imagesOutputPath": "application/static/images",
+  "serverURL": "http://127.0.0.1:5000"
 }
