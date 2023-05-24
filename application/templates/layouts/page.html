@@ -4,7 +4,7 @@
 
   <main id="app-main">
 
-    {% if page_data.title %}
+    {% if page_data and page_data.title %}
     <header class="app-page-header govuk-!-margin-bottom-6">
       <div class="app-page-header__content">
         {% if page_data.caption %}
