@@ -2,11 +2,13 @@
 
 {% block content_primary %}
   <h2 id="mandated-standard" class="govuk-heading-m">{{dataset.name}}</h2>
+  <p>{{dataset.description}}</p>
   <ul class="govuk-list govuk-list--bullet">
     {% for field in dataset.field %}
     <li><a href="#">{{field}}</a></li>
     {% endfor %}
   </ul>
+
   <table class="govuk-table">
     <caption class="govuk-table__caption">Fields</caption>
     <thead class="govuk-table__head">
