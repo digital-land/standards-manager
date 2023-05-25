@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template
 
-from application.models import Dataset, Field, Specification
+from application.models import Dataset, Datatype, Field, Specification
 
 spec = Blueprint("specification", __name__, url_prefix="/specification")
 
@@ -68,3 +68,20 @@ def field(field):
         "title": "Field",
     }
     return render_template("field.html", field=f, page_data=page_data)
+
+
+@spec.route("/datatype")
+def datatypes():
+    page_data = {
+        "title": "Datatypes",
+        "lede": "The following datatypes are used in Digital Land specifications.",
+    }
+    datatypes = Datatype.query.all()
+    return render_template("datatypes.html", page_data=page_data, datatypes=datatypes)
+
+
+@spec.route("/datatype/<string:datatype>")
+def datatype(datatype):
+    d = Datatype.query.get(datatype)
+    page_data = {"title": "Datatype", "subtitle": d.name}
+    return render_template("datatype.html", page_data=page_data, datatype=d)

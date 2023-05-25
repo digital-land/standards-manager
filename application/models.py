@@ -145,7 +145,11 @@ class Dataset(DateModel):
     wikidata = db.Column(db.Text)
     wikipedia = db.Column(db.Text)
     fields = db.relationship(
-        "Field", secondary=dataset_field, lazy="subquery", order_by="Field.field"
+        "Field",
+        secondary=dataset_field,
+        lazy="subquery",
+        order_by="Field.field",
+        back_populates="datasets",
     )
 
 
@@ -178,7 +182,11 @@ class Field(DateModel):
         "Typology", secondary=typology_field, lazy="subquery", back_populates="fields"
     )
     datasets = db.relationship(
-        "Dataset", secondary=dataset_field, lazy="subquery", order_by="Dataset.dataset"
+        "Dataset",
+        secondary=dataset_field,
+        lazy="subquery",
+        order_by="Dataset.dataset",
+        back_populates="fields",
     )
 
     @property

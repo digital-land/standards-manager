@@ -1,0 +1,11 @@
+{% extends 'layouts/page.html' %}
+
+{% block content_primary %}
+
+  <ul class="govuk-list govuk-list--bullet">
+    {% for datatype in datatypes %}
+    <li><a href="{{url_for('specification.datatype', datatype=datatype.datatype)}}">{{datatype.name}}</a></li>
+    {% endfor %}
+  </ul>
+
+{% endblock %}

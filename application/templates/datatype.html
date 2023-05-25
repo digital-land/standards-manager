@@ -1,0 +1,9 @@
+{% extends 'layouts/page.html' %}
+
+{% block content_primary %}
+  <h2 id="mandated-standard" class="govuk-heading-m">{{datatype.name}}</h2>
+  <p class="govuk-body-m">
+    {{datatype.text | markdown | safe}}
+  </p>
+
+{% endblock %}

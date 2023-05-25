@@ -54,7 +54,9 @@ def register_context_processors(app):
 
 
 def register_filters(app):
-    pass
+    from application.filters import markdown
+
+    app.add_template_filter(markdown, name="markdown")
 
 
 def register_extensions(app):
