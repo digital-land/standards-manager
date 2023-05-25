@@ -86,6 +86,7 @@ def register_templates(app):
         ]
     )
     app.jinja_loader = multi_loader
+    app.jinja_env.add_extension("jinja2.ext.do")
 
 
 def register_commands(app):
