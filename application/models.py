@@ -178,6 +178,7 @@ class Field(DateModel):
     wikidata_property = db.Column(db.Text)
     cardinality = db.Column(db.Text)
     datatype_id = db.Column(db.Text, db.ForeignKey("datatype.datatype"), nullable=True)
+    datatype = db.relationship("Datatype")
     typologies = db.relationship(
         "Typology", secondary=typology_field, lazy="subquery", back_populates="fields"
     )

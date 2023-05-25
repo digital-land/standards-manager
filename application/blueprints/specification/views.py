@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template
 
-from application.models import Dataset, Datatype, Field, Specification
+from application.models import Dataset, Datatype, Field, Specification, Typology
 
 spec = Blueprint("specification", __name__, url_prefix="/specification")
 
@@ -54,10 +54,7 @@ def dataset(dataset):
 @spec.route("/field")
 def fields():
     fields = Field.query.all()
-    page_data = {
-        "title": "Fields",
-        "lede": "A field provides the meaning of the data in a column in a CSV file, or GeoJSON file property. The following fields are used in Digital Land specifications:",  # noqa
-    }
+    page_data = {"title": "Fields"}
     return render_template("fields.html", fields=fields, page_data=page_data)
 
 
@@ -72,10 +69,7 @@ def field(field):
 
 @spec.route("/datatype")
 def datatypes():
-    page_data = {
-        "title": "Datatypes",
-        "lede": "The following datatypes are used in Digital Land specifications.",
-    }
+    page_data = {"title": "Datatypes"}
     datatypes = Datatype.query.all()
     return render_template("datatypes.html", page_data=page_data, datatypes=datatypes)
 
@@ -87,4 +81,23 @@ def datatype(datatype):
     page_data = {"title": "Datatype", "subtitle": d.name}
     return render_template(
         "datatype.html", page_data=page_data, datatype=d, fields=fields
+    )
+
+
+@spec.route("/typology")
+def typologies():
+    page_data = {"title": "Typologies"}
+    typologies = Typology.query.all()
+    return render_template(
+        "typologies.html", page_data=page_data, typologies=typologies
+    )
+
+
+@spec.route("/typology/<string:typology>")
+def typology(typology):
+    t = Typology.query.get(typology)
+    datatypes = set([f.datatype for f in t.fields])
+    page_data = {"title": "Typology", "subtitle": t.name}
+    return render_template(
+        "typology.html", page_data=page_data, typology=t, datatypes=datatypes
     )

@@ -31,7 +31,7 @@
             {% endif %}
           </td>
           <td class="govuk-table__cell">{{field.name}}</td>
-          <td class="govuk-table__cell"><a href="#">{{field.datatype_id}}</a></td>
+          <td class="govuk-table__cell"><a href="{{url_for('specification.datatype', datatype=field.datatype_id)}}">{{field.datatype_id}}</a></td>
           <td class="govuk-table__cell">{{field.cardinality}}</td>
           </tr>
         {% endfor %}

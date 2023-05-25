@@ -1,0 +1,11 @@
+{% extends 'layouts/page.html' %}
+
+{% block content_primary %}
+<p>The following typologoies are used to categorise the <a href="{{url_for('specification.fields')}}">fields</a> used in Digital Land specifications:</p>
+<ul class="govuk-list govuk-list--bullet">
+  {% for typology in typologies %}
+  <li><a href="{{url_for('specification.typology', typology=typology.typology)}}">{{typology.name}}</a></li>
+  {% endfor %}
+</ul>
+
+{% endblock %}

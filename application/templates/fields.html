@@ -1,6 +1,8 @@
 {% extends 'layouts/page.html' %}
 
 {% block content_primary %}
+<p>A field provides the meaning of the data in a column in a CSV file, or GeoJSON file property. The following
+fields are used in Digital Land specifications.</p>
 <table class="govuk-table">
   <caption class="govuk-table__caption">Fields</caption>
   <thead class="govuk-table__head">
@@ -19,9 +21,9 @@
       <td class="govuk-table__cell"><a href="{{url_for('specification.field', field=field.field)}}">{{field.field}}</a>
       </td>
       <td class="govuk-table__cell">{{field.name}}</td>
-      <td class="govuk-table__cell"><a href="#">{{field.datatype_id}}</a></td>
+      <td class="govuk-table__cell"><a href="{{url_for('specification.datatype', datatype=field.datatype_id)}}">{{field.datatype_id}}</a></td>
       <td class="govuk-table__cell">{{field.cardinality}}</td>
-      <td class="govuk-table__cell">{{field.parent_field}}</td>
+      <td class="govuk-table__cell"><a href="{{url_for('specification.field', field=field.parent_field)}}">{{field.parent_field}}</a></td>
       <td class="govuk-table__cell">{{field.typology}}</td>
     </tr>
     {% endfor %}
