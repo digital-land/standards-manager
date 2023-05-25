@@ -1,0 +1,125 @@
+{% extends "layouts/layout.html" %}
+{% from "components/sub-navigation/macro.jinja" import appSubNavigation %}
+{% block page_title %}{{ page_data.title }}{% endblock %}
+
+{%- block breadcrumbs -%}
+{{- govukBreadcrumbs({ 'items': page_data.breadcrumbs }) -}}
+{%- endblock -%}
+
+{% block content %}
+
+{% if page_data.full_page_title %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-xl">{{ page_data.page_title }}</h1>
+  </div>
+</div>
+{% endif %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-third" id="content_secondary">
+    <a href="#content_primary" class="govuk-visually-hidden">Skip guidance navigation</a>
+    {% block content_secondary %}
+
+    {% set themes = [
+    'Guidance for local planning authorities',
+    'Data specification guidance',
+    'Other guidance'
+    ] %}
+
+    {% set sectionPath = '/guidance/' %}
+
+    {{
+    appSubNavigation({
+    'hideChildrenWhenParentIsCurrent': True,
+    'visuallyHiddenTitle': 'Guidance navigation',
+    'sort': False,
+    'themed': True,
+    'links': [
+    {
+    'text': 'Guidance home',
+    'href': sectionPath,
+    'theme': themes[0],
+    'current': true if page_data.name == 'home' else false,
+    },
+    {
+    'text': 'Introduction',
+    'href': sectionPath + 'introduction',
+    'theme': themes[0],
+    'current': true if page_data.name == 'introduction' else false,
+    },
+    {
+    'text': 'How to provide data',
+    'theme': themes[0],
+    'href': sectionPath + 'how-to-provide-data',
+    'current': true if page_data.name == 'how-to-provide-data' else false,
+    },
+    {
+    'text': 'Data specifications guidance',
+    'theme': themes[0],
+    'href': sectionPath + 'specifications/',
+    'current': true if page_data.name == 'specifications' else false,
+    'parent': true,
+    'children': [
+    {
+    'text': "Conservation area data",
+    'href': sectionPath + 'specifications/conservation-area',
+    'child': true,
+    'current': true if page_data.name == 'conservation-area' else false,
+    },
+    {
+    'text': "Design code data",
+    'href': sectionPath + 'specifications/design-code',
+    'child': true,
+    'current': true if page_data.name == 'design-code' else false,
+    },
+    {
+    'text': "Listed building data",
+    'href': sectionPath + 'specifications/listed-building',
+    'child': true,
+    'current': true if page_data.name == 'listed-building' else false,
+    },
+    {
+    'text': "Article 4 Direction data",
+    'href': sectionPath + 'specifications/article-4-direction',
+    'child': true,
+    'current': true if page_data.name == 'article-4-direction' else false,
+    },
+    {
+    'text': "Tree preservation order data",
+    'href': sectionPath + 'specifications/tree-preservation-order',
+    'child': true,
+    'current': true if page_data.name == 'tree-preservation-order' else false,
+    }
+    ]
+    },
+    {
+    'text': 'Technical specifications',
+    'theme': 'Related links',
+    'href': 'https://digital-land.github.io/specification/specification/',
+    'current': true if page_data.name == 'technical-specifications' else false,
+    }
+    ]
+    })
+    }}
+    {% endblock %}
+  </div>
+  <!-- /.govuk-grid-column-one-third -->
+  <div class="govuk-grid-column-two-thirds" id="content_primary">
+
+    {% if not page_data.full_page_title %}
+    {% if page_data.page_title %}
+    <h1 class="govuk-heading-xl">{{ page_data.pageTitle }}</h1>
+    {% endif %}
+    {% endif %}
+
+    <div class="app-prose">
+      {% block content_primary %}
+      {% endblock %}
+    </div>
+    <!-- /.app-prose -->
+  </div>
+  <!-- /.govuk-grid-column-two-thirds -->
+</div>
+<!-- /.govuk-grid-row -->
+{% endblock %}
