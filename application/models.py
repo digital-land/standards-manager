@@ -177,6 +177,9 @@ class Field(DateModel):
     typologies = db.relationship(
         "Typology", secondary=typology_field, lazy="subquery", back_populates="fields"
     )
+    datasets = db.relationship(
+        "Dataset", secondary=dataset_field, lazy="subquery", order_by="Dataset.dataset"
+    )
 
     @property
     def typology(self):

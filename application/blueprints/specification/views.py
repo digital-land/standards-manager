@@ -59,3 +59,12 @@ def fields():
         "lede": "A field provides the meaning of the data in a column in a CSV file, or GeoJSON file property. The following fields are used in Digital Land specifications:",  # noqa
     }
     return render_template("fields.html", fields=fields, page_data=page_data)
+
+
+@spec.route("/field/<string:field>")
+def field(field):
+    f = Field.query.get(field)
+    page_data = {
+        "title": "Field",
+    }
+    return render_template("field.html", field=f, page_data=page_data)

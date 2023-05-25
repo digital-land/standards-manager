@@ -1,0 +1,46 @@
+{% extends 'layouts/page.html' %}
+
+{% block content_primary %}
+<h2 id="mandated-standard" class="govuk-heading-m">{{field.name}}</h2>
+
+<table class="govuk-table">
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Name</th>
+      <td class="govuk-table__cell">{{field.name}}</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Field</th>
+      <td class="govuk-table__cell">{{field.field}}</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Datatype</th>
+      <td class="govuk-table__cell"><a href=#">{{field.datatype_id}}</a></td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Cardinality</th>
+      <td class="govuk-table__cell">{{field.cardinality}}</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Parent field</th>
+      <td class="govuk-table__cell"><a href="#">{{field.parent_field}}</a></td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Typology</th>
+      <td class="govuk-table__cell"><a href="#">{{field.typology}}</a></td>
+    </tr>
+
+  </tbody>
+</table>
+{% if field.datasets %}
+<h2 class="govuk-heading-m">Schemas</h2>
+<p class="govuk-body">The following datasets use this field:</p>
+<ul class="govuk-list govuk-list--bullet">
+  {% for dataset in field.datasets %}
+  <li>
+    <a href="{{url_for('specification.dataset', dataset=dataset.dataset)}}">{{dataset.name}}</a>
+  </li>
+  {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}
