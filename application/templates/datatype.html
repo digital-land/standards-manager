@@ -2,8 +2,15 @@
 
 {% block content_primary %}
   <h2 id="mandated-standard" class="govuk-heading-m">{{datatype.name}}</h2>
-  <p class="govuk-body-m">
+  <p>
     {{datatype.text | markdown | safe}}
   </p>
+  <h3 class="govuk-heading-s">Fields</h3>
+  <p>The following fields use this datatype:</p>
+  <ul class="govuk-list govuk-list--bullet">
+    {% for field in fields %}
+    <li><a href="{{url_for('specification.field', field=field.field)}}">{{field.name}}</a></li>
+    {% endfor %}
 
+  </ul>
 {% endblock %}

@@ -83,5 +83,8 @@ def datatypes():
 @spec.route("/datatype/<string:datatype>")
 def datatype(datatype):
     d = Datatype.query.get(datatype)
+    fields = Field.query.filter(Field.datatype_id == d.datatype).all()
     page_data = {"title": "Datatype", "subtitle": d.name}
-    return render_template("datatype.html", page_data=page_data, datatype=d)
+    return render_template(
+        "datatype.html", page_data=page_data, datatype=d, fields=fields
+    )
