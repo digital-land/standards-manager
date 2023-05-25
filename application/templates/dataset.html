@@ -2,7 +2,7 @@
 
 {% block content_primary %}
   <h2 id="mandated-standard" class="govuk-heading-m">{{dataset.name}}</h2>
-  <p>{{dataset.description}}</p>
+  {% if dataset.description %}<p>{{dataset.description}}</p>{% endif %}
   <ul class="govuk-list govuk-list--bullet">
     {% for field in dataset.field %}
     <li><a href="#">{{field}}</a></li>
