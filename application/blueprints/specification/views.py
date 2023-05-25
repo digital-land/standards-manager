@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template
 
-from application.models import Dataset, Specification
+from application.models import Dataset, Field, Specification
 
 spec = Blueprint("specification", __name__, url_prefix="/specification")
 
@@ -35,6 +35,7 @@ def specification(specification):
         "specification.html", specification=specification, page_data=page_data
     )
 
+
 @spec.route("/dataset")
 def datasets():
     page_data = {"title": "Datasets"}
@@ -43,9 +44,18 @@ def datasets():
     )
 
 
-@spec.route("/dataset/<string:dataset>/")
+@spec.route("/dataset/<string:dataset>")
 def dataset(dataset):
     ds = Dataset.query.get(dataset)
     page_data = {"title": "Dataset"}
     return render_template("dataset.html", dataset=ds, page_data=page_data)
 
+
+@spec.route("/field")
+def fields():
+    fields = Field.query.all()
+    page_data = {
+        "title": "Fields",
+        "lede": "A field provides the meaning of the data in a column in a CSV file, or GeoJSON file property. The following fields are used in Digital Land specifications:",  # noqa
+    }
+    return render_template("fields.html", fields=fields, page_data=page_data)

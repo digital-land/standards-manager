@@ -178,6 +178,14 @@ class Field(DateModel):
         "Typology", secondary=typology_field, lazy="subquery", back_populates="fields"
     )
 
+    @property
+    def typology(self):
+        if len(self.typologies) == 0:
+            return None
+        if len(self.typologies) == 1:
+            return self.typologies[0].typology
+        return [t.typology for t in self.typologies]
+
 
 class Datatype(DateModel):
     datatype = db.Column(db.Text, primary_key=True, nullable=False)
