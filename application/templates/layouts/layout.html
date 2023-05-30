@@ -59,3 +59,8 @@
 
 {% block content %}
 {% endblock %}
+
+{% block footer %}
+  {% set fullFooter = False %}
+  {% include 'partials/footer.html' with context %}
+{% endblock %}
