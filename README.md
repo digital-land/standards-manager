@@ -21,7 +21,7 @@ Run any db migations
 
 Load specification/standards seed data
 
-  flask data load
+    flask data load
 
 To run the application run:
 
@@ -31,7 +31,7 @@ To run the application run:
 
 If you need to reload seed data run:
 
-  flask data drop && flask data load
+    flask data drop && flask data load
 
 
 To create new data migrations:
