@@ -12,6 +12,7 @@ themes = [
 
 titles = {
     "introduction": "Introduction for local planning authorities",
+    "how-to-provide-data": "How to provide data",
 }
 
 
@@ -33,3 +34,24 @@ def page(page_name):
         "page_name": page_name,
     }
     return render_template(f"guidance/{page_name}.html", **page_data)
+
+
+@guide.route("/specifications/")
+def specifications():
+    page_data = {
+        "page_title": "Data specifications for local planning authorities",
+        "themes": themes,
+    }
+    return render_template("guidance/specifications/index.html", **page_data)
+
+
+@guide.route("/specifications/<string:specification_name>")
+def specification(specification_name):
+    page_title = f"{specification_name.replace('-', ' ').title()} data"
+    page_data = {
+        "page_title": page_title,
+        "themes": themes,
+    }
+    return render_template(
+        f"guidance/specifications/{specification_name}.html", **page_data
+    )
