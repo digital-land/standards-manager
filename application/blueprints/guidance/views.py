@@ -41,6 +41,7 @@ def specifications():
     page_data = {
         "page_title": "Data specifications for local planning authorities",
         "themes": themes,
+        "page_name": "specifications",
     }
     return render_template("guidance/specifications/index.html", **page_data)
 
@@ -51,6 +52,7 @@ def specification(specification_name):
     page_data = {
         "page_title": page_title,
         "themes": themes,
+        "page_name": specification_name,
     }
     return render_template(
         f"guidance/specifications/{specification_name}.html", **page_data

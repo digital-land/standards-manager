@@ -20,82 +20,80 @@
   <div class="govuk-grid-column-one-third" id="content-secondary">
     <a href="#content_primary" class="govuk-visually-hidden">Skip guidance navigation</a>
     {% block content_secondary %}
-
-    {% set sectionPath = '/guidance/' %}
-
-    {{
-    appSubNavigation({
-    'hideChildrenWhenParentIsCurrent': True,
-    'visuallyHiddenTitle': 'Guidance navigation',
-    'sort': False,
-    'themed': True,
-    'links': [
-    {
-    'text': 'Guidance home',
-    'href': sectionPath,
-    'theme': themes[0],
-    'current': true if page_name == 'home' else false,
-    },
-    {
-    'text': 'Introduction',
-    'href': url_for('guidance.page', page_name='introduction'),
-    'theme': themes[0],
-    'current': true if page_name == 'introduction' else false,
-    },
-    {
-    'text': 'How to provide data',
-    'theme': themes[0],
-    'href': sectionPath + 'how-to-provide-data',
-    'current': true if page_name == 'how-to-provide-data' else false,
-    },
-    {
-    'text': 'Data specifications guidance',
-    'theme': themes[0],
-    'href': sectionPath + 'specifications/',
-    'current': true if name == 'specifications' else false,
-    'parent': true,
-    'children': [
-    {
-    'text': "Conservation area data",
-    'href': sectionPath + 'specifications/conservation-area',
-    'child': true,
-    'current': true if page_name == 'conservation-area' else false,
-    },
-    {
-    'text': "Design code data",
-    'href': sectionPath + 'specifications/design-code',
-    'child': true,
-    'current': true if page_name == 'design-code' else false,
-    },
-    {
-    'text': "Listed building data",
-    'href': sectionPath + 'specifications/listed-building',
-    'child': true,
-    'current': true if page_name == 'listed-building' else false,
-    },
-    {
-    'text': "Article 4 Direction data",
-    'href': sectionPath + 'specifications/article-4-direction',
-    'child': true,
-    'current': true if page_name == 'article-4-direction' else false,
-    },
-    {
-    'text': "Tree preservation order data",
-    'href': sectionPath + 'specifications/tree-preservation-order',
-    'child': true,
-    'current': true if page_name == 'tree-preservation-order' else false,
-    }
-    ]
-    },
-    {
-    'text': 'Technical specifications',
-    'theme': 'Related links',
-    'href': 'https://digital-land.github.io/specification/specification/',
-    'current': true if page_name == 'technical-specifications' else false,
-    }
-    ]
-    })
-    }}
+      {% set sectionPath = '/guidance/' %}
+      {{
+        appSubNavigation({
+          'hideChildrenWhenParentIsCurrent': True,
+          'visuallyHiddenTitle': 'Guidance navigation',
+          'sort': False,
+          'themed': True,
+          'links': [
+            {
+              'text': 'Guidance home',
+              'href': sectionPath,
+              'theme': themes[0],
+              'current': true if page_name == 'home' else false,
+            },
+            {
+              'text': 'Introduction',
+              'href': url_for('guidance.page', page_name='introduction'),
+              'theme': themes[0],
+              'current': true if page_name == 'introduction' else false,
+            },
+            {
+              'text': 'How to provide data',
+              'theme': themes[0],
+              'href': sectionPath + 'how-to-provide-data',
+              'current': true if page_name == 'how-to-provide-data' else false,
+            },
+            {
+              'text': 'Data specifications guidance',
+              'theme': themes[0],
+              'href': sectionPath + 'specifications/',
+              'current': true if page_name == 'specifications' else false,
+              'parent': true,
+              'children': [
+                {
+                  'text': "Conservation area data",
+                  'href': sectionPath + 'specifications/conservation-area',
+                  'child': true,
+                  'current': true if page_name == 'conservation-area' else false,
+                },
+                {
+                  'text': "Design code data",
+                  'href': sectionPath + 'specifications/design-code',
+                  'child': true,
+                  'current': true if page_name == 'design-code' else false,
+                },
+                {
+                  'text': "Listed building data",
+                  'href': sectionPath + 'specifications/listed-building',
+                  'child': true,
+                  'current': true if page_name == 'listed-building' else false,
+                },
+                {
+                  'text': "Article 4 Direction data",
+                  'href': sectionPath + 'specifications/article-4-direction',
+                  'child': true,
+                  'current': true if page_name == 'article-4-direction' else false,
+                },
+                {
+                  'text': "Tree preservation order data",
+                  'href': sectionPath + 'specifications/tree-preservation-order',
+                  'child': true,
+                  'current': true if page_name == 'tree-preservation-order' else false,
+                }
+              ]
+            },
+            {
+              'text': 'Technical specifications',
+              'theme': 'Related links',
+              'href': 'https://digital-land.github.io/specification/specification/',
+              'current': true if page_name == 'technical-specifications' else false,
+            }
+          ]
+        })
+      }}
     {% endblock %}
   </div>
   <!-- /.govuk-grid-column-one-third -->
