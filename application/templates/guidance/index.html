@@ -4,17 +4,17 @@
 {% block content_primary %}
 
 <h2 class="govuk-heading-s govuk-!-margin-bottom-1">
-  <a href="#">Introduction</a>
+  <a href="{{url_for('guidance.page', page_name='introduction')}}">Introduction</a>
 </h2>
 <p>A brief overview of the process of providing data and the services this will contribute to.</p>
 
 <h2 class="govuk-heading-s govuk-!-margin-bottom-1">
-  <a href="#">How to provide data</a>
+  <a href="{{url_for('guidance.page', page_name='how-to-provide-data')}}">How to provide data</a>
 </h2>
 <p>Step-by-step instructions on how to publish your data.</p>
 
 <h2 class="govuk-heading-s govuk-!-margin-bottom-1">
-  <a href="#">Data specifications guidance</a>
+  <a href="{{url_for('guidance.specifications')}}">Data specifications guidance</a>
 </h2>
 <p>What to include in each dataset.</p>
 

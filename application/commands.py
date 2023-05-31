@@ -4,6 +4,7 @@ import tempfile
 from csv import DictReader
 from zipfile import ZipFile
 
+import frontmatter
 import requests
 from flask.cli import AppGroup
 
@@ -67,6 +68,9 @@ def load_data():
                                 logger.error(e)
                                 db.session.rollback()
 
+                    if table.name == "specification":
+                        _load_specification_markdown(tmp_dir)
+
             # load the typology and specification join tables
             _load_typology_field(tmp_dir)
             _load_specification_dataset(tmp_dir)
@@ -127,6 +131,22 @@ def _load_specification_dataset(tmp_dir):
                         )
                         logger.error(e)
                         db.session.rollback()
+
+
+def _load_specification_markdown(tmp_dir):
+    markdown_dir = os.path.join(tmp_dir, "specification-main/content/specification")
+    for specification in Specification.query.all():
+        markdown_path = os.path.join(markdown_dir, f"{specification.specification}.md")
+        if os.path.exists(markdown_path):
+            print(
+                f"fetching infor from markdown {markdown_path} for {specification.specification}"
+            )
+            front_matter = frontmatter.load(markdown_path)
+            if front_matter.get("plural"):
+                specification.plural = front_matter.get("plural")
+                db.session.add(specification)
+    if db.session.dirty:
+        db.session.commit()
 
 
 @data_cli.command("drop")

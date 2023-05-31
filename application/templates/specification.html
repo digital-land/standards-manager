@@ -1,6 +1,62 @@
 {% extends 'layouts/page.html' %}
 
 {% block content_primary %}
-  {# {{ specification }} #}
-  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur temporibus, eos vero nostrum eligendi maxime ratione ipsa. Asperiores, repudiandae illo eaque enim dolorem aliquid tempore eveniet quaerat ipsum autem ad.</p>
+  <h2 id="abstract" class="govuk-heading-m">Abstract</h2>
+  <p class="govuk-body">
+    This specification defines the format for how a planning authority should provide information about {{specification.specification}} as data.
+  </p>
+  <p class="govuk-body">
+    This technical specification is accompanied by guidance, examples and other tools providing feedback to data
+    providers.
+  </p>
+
+  <h2 id="status" class="govuk-heading-m">Status of this specification</h2>
+  <p class="govuk-body">
+    This is a draft specification, following the standards for planning data process [<a href="#process">process</a>].
+    The contents of this specification are currently under development, and liable to change based on feedback.
+  </p>
+  <p class="govuk-body">
+    This specification is intended to be published as one of a number of official data standards for the provision of
+    planning data under the proposed Levelling-up and Regeneration bill [<a href="#LURB">LURB</a>], as introduced to
+    parliament on 19 May 2022.
+  </p>
+  <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+    <strong class="govuk-warning-text__text"><span class="govuk-warning-text__assistive">Warning</span>
+      It is inappropriate to cite this document as other than a work in progress.
+    </strong>
+  </div>
+  <p id="feedback" class="govuk-body">
+    Comments and feedback on this specification may be provided on the GitHub issue [TBD] or sent to
+    <a href="mailto:digitalland@communities.gov.uk">digitalland@communities.gov.uk</a>.
+  </p>
+
+  <h2 id="conformance" class="govuk-heading-m">Conformance</h2>
+  <p class="govuk-body">
+    As well as sections marked as non-normative, all authoring guidelines, diagrams, examples, and notes in this
+    specification are non-normative. Everything else in this specification is normative.
+  </p>
+  <p class="govuk-body">
+    The key words MAY, MUST, NOT, and SHOULD in this document are to be interpreted as described in [<a
+      href="#RFC2119">RFC2119</a>]
+    when, and only when, they appear in all capitals [<a href="#RFC8174">RFC8174</a>] as shown here.
+  </p>
+
+  <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+  <h2 id="documentation-page" class="govuk-heading-m">Documentation page</h2>
+    <p class="govuk-body">A data provider MUST provide a list of all of the {{specification.name}} within its jurisdiction on a documentation page.
+    </p>
+    <p class="govuk-body">
+      The documentation page MUST be accessible as HTML from a public URL.
+    </p>
+    <p class="govuk-body">
+      The documentation page MUST be clearly owned and operated by the data provider.
+      Where the data provider is a local authority or other public body, the web page MUST be on a .gov.uk domain.
+    </p>
+    <p class="govuk-body">
+      The documentation page MUST include:
+    </p>
+    <ul class="govuk-list govuk-list--bullet">
+
+
 {% endblock %}

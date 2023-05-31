@@ -7,3 +7,4 @@ Flask-SQLAlchemy
 Flask-Migrate
 requests
 Markdown
+python-frontmatter

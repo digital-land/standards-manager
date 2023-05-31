@@ -118,6 +118,7 @@ class Specification(DateModel):
     documentation_url = db.Column(db.Text)
     name = db.Column(db.Text)
     prefix = db.Column(db.Text)
+    plural = db.Column(db.Text)
     datasets = db.relationship(
         "Dataset", secondary=specification_dataset, lazy="subquery"
     )

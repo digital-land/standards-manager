@@ -53,7 +53,9 @@ pyflakes==3.0.1
 pytest==7.3.1
     # via -r requirements/dev-requirements.in
 pyyaml==6.0
-    # via pre-commit
+    # via
+    #   -c requirements/requirements.txt
+    #   pre-commit
 tomli==2.0.1
     # via
     #   black
