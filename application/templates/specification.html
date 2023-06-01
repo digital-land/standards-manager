@@ -60,6 +60,14 @@
     <p class="govuk-body">
       The documentation page MUST include:
     </p>
+    <ul class="govuk-list govuk-list--bullet">
+      {% for dataset in specification.datasets %}
+        <li>A hyperlink to the <a href="#{{dataset.dataset}}-dataset">{{dataset.dataset.replace("-", " ")}}</a> data</li>
+      {% endfor %}
+      <li>A clear licence for reusing the data, for example [<a href="#OGL3">OGL3</a>].</li>
+      <li>Any attribution needed when using the data, for example [<a href="#crown-copyright">Crown Copyright</a>].</li>
+    </ul>
+
 
   <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 
