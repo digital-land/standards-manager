@@ -81,4 +81,9 @@
     {{ render_dataset({'dataset': dataset}) }}
   {% endfor %}
 
+  {% with specification=specification %}
+    {% include 'partials/specification-general.html' %}
+  {% endwith %}
+
+
 {% endblock %}
