@@ -1,0 +1,18 @@
+{% macro render_dataset(params) %}
+  {% set dataset = params.dataset %}
+
+  <h3 class="govuk-heading-m">{{ dataset.name }}</h3>
+
+  <p class="govuk-body">The {{dataset.name}} data MUST be published in an <a href="#open-data-format">open data format</a>.</p>
+
+  <p class="govuk-body">The data MUST contain at least one entry for each {{dataset.name}}.</p>
+
+  <p class="govuk-body">The data MUST contain the following fields:</p>
+
+  <ul class="govuk-list govuk-list--bullet">
+    {% for field in dataset.fields %}
+      <li><code>{{ field.field }}</code></li>
+    {% endfor %}
+  </ul>
+
+{% endmacro %}
