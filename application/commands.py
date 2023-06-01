@@ -70,6 +70,7 @@ def load_data():
 
                     if table.name == "specification":
                         _load_specification_markdown(tmp_dir)
+                        _load_specification_diagram(tmp_dir)
 
             # load the typology and specification join tables
             _load_typology_field(tmp_dir)
@@ -145,6 +146,23 @@ def _load_specification_markdown(tmp_dir):
             if front_matter.get("plural"):
                 specification.plural = front_matter.get("plural")
                 db.session.add(specification)
+    if db.session.dirty:
+        db.session.commit()
+
+
+def _load_specification_diagram(tmp_dir):
+    content_dir = os.path.join(tmp_dir, "specification-main/docs/specification")
+    for specification in Specification.query.all():
+        svg_path = os.path.join(
+            content_dir, f"{specification.specification}/diagram.svg"
+        )
+        if os.path.exists(svg_path):
+            print(f"fetching {specification.specification} diagram from {svg_path}")
+            with open(svg_path) as f:
+                svg_content = f.read()
+                specification.diagram = svg_content
+                db.session.add(specification)
+
     if db.session.dirty:
         db.session.commit()
 
