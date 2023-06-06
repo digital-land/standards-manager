@@ -59,5 +59,6 @@ def specification(specification_id):
         "themes": themes,
         "dataset_count": dataset_count,
         "specification": specification,
+        "page_name": specification_id,
     }
     return render_template("guidance/specifications/specification.html", **page_data)
