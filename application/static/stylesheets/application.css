@@ -7126,6 +7126,31 @@ p + .govuk-heading-s,
       font-size: 14pt;
       line-height: 1.15; } }
 
+.app-list--fields {
+  padding: 10px;
+  border: 2px solid #b1b4b6; }
+  .app-list--fields > li {
+    margin: 10px 0; }
+
+.app-list--fields-divided > li {
+  border-bottom: 1px solid #b1b4b6;
+  padding: 10px 0;
+  margin: 0; }
+  .app-list--fields-divided > li:first-child {
+    padding-top: 0; }
+  .app-list--fields-divided > li:last-child {
+    padding-bottom: 0;
+    border-bottom: 0; }
+
+.app-code {
+  font-family: SFMono-Regular, Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace; }
+
+.app-code--inline {
+  display: inline-block;
+  background: #f3f2f1;
+  padding: 0.2em 0.35em;
+  border-radius: 0.25em; }
+
 .app-\!-float-left {
   float: left; }
   img, figure {
