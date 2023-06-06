@@ -1,0 +1,22 @@
+{% extends "layouts/layout--guidance.html" %}
+{% block content_primary %}
+
+  <p class="govuk-body">There are {{dataset_count}} datasets you must provide for {{specification.plural}}:</p>
+
+  <ul class="govuk-list govuk-list--bullet">
+    {% for dataset in specification.datasets %}
+      <li><a class="govuk-link" href="#{{dataset.dataset}}-dataset">{{dataset.dataset.replace("-", " ")}} dataset</a></li>
+    {% endfor %}
+  </ul>
+  <h2 class="govuk-heading-l" id="format">Format</h2>
+  <p class="govuk-body">You can provide data in one of these formats:</p>
+  <ul class="govuk-list govuk-list--bullet">
+    <li>CSV</li>
+    <li>GeoJSON</li>
+    <li>GML</li>
+    <li>Geopackage</li>
+  </ul>
+  <p class="govuk-body">For more information, see <a class="govuk-link" href="{{url_for('guidance.page', page_name='how-to-provide-data')}}">how to provide your
+      data</a>.</p>
+  <hr class="govuk-section-break govuk-section-break--l" />
+{% endblock %}

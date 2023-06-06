@@ -1,4 +1,6 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, abort, render_template
+
+from application.models import Specification
 
 guide = Blueprint("guidance", __name__, url_prefix="/guidance")
 
@@ -46,14 +48,16 @@ def specifications():
     return render_template("guidance/specifications/index.html", **page_data)
 
 
-@guide.route("/specifications/<string:specification_name>")
-def specification(specification_name):
-    page_title = f"{specification_name.replace('-', ' ').title()} data"
+@guide.route("/specifications/<string:specification_id>")
+def specification(specification_id):
+    specification = Specification.query.get(specification_id)
+    if specification is None:
+        return abort(404)
+    dataset_count = len(specification.datasets)
     page_data = {
-        "page_title": page_title,
+        "page_title": specification.name,
         "themes": themes,
-        "page_name": specification_name,
+        "dataset_count": dataset_count,
+        "specification": specification,
     }
-    return render_template(
-        f"guidance/specifications/{specification_name}.html", **page_data
-    )
+    return render_template("guidance/specifications/specification.html", **page_data)
