@@ -7,6 +7,7 @@ from zipfile import ZipFile
 import frontmatter
 import requests
 from flask.cli import AppGroup
+from sqlalchemy import and_, update
 
 from application.extensions import db
 from application.models import Specification
@@ -28,6 +29,8 @@ foreign_keys = {
     "licence",
     "specification_status",
     "typology",
+    "dataset",
+    "field",
 }
 
 
@@ -68,13 +71,13 @@ def load_data():
                                 logger.error(e)
                                 db.session.rollback()
 
-                    if table.name == "specification":
-                        _load_specification_markdown(tmp_dir)
-                        _load_specification_diagram(tmp_dir)
-
             # load the typology and specification join tables
             _load_typology_field(tmp_dir)
             _load_specification_dataset(tmp_dir)
+
+            # load the specification markdown and diagram
+            _load_specification_markdown(tmp_dir)
+            _load_specification_diagram(tmp_dir)
 
 
 def _load_typology_field(tmp_dir):
@@ -117,11 +120,11 @@ def _load_specification_dataset(tmp_dir):
         specification_dataset_field = db.metadata.tables["specification_dataset_field"]
         for specification in Specification.query.all():
             for d in specification.datasets:
-                for f in d.fields:
+                for f in d.dataset_fields:
                     r = {
                         "specification": specification.specification,
                         "dataset": d.dataset,
-                        "field": f.field,
+                        "field": f.field.field,
                     }
                     try:
                         db.session.execute(specification_dataset_field.insert(), r)
@@ -146,6 +149,27 @@ def _load_specification_markdown(tmp_dir):
             if front_matter.get("plural"):
                 specification.plural = front_matter.get("plural")
                 db.session.add(specification)
+
+            dataset_field = db.metadata.tables["dataset_field"]
+            datasets = front_matter.get("datasets")
+            for dataset in datasets:
+                fields = dataset.get("fields")
+                for field in fields:
+                    description = field.get("description")
+                    if description:
+                        stmt = (
+                            update(dataset_field)
+                            .where(
+                                and_(
+                                    dataset_field.c.dataset_id == dataset["dataset"],
+                                    dataset_field.c.field_id == field["field"],
+                                )
+                            )
+                            .values(description=description)
+                        )
+                        db.session.execute(stmt)
+                        db.session.commit()
+
     if db.session.dirty:
         db.session.commit()
 

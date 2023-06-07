@@ -59,16 +59,18 @@ class ProvisionReason(DateModel):
 
 
 # TODO - does this need a description field?
-dataset_field = db.Table(
-    "dataset_field",
-    db.Column("dataset", db.Text, db.ForeignKey("dataset.dataset"), primary_key=True),
-    db.Column("field", db.Text, db.ForeignKey("field.field"), primary_key=True),
-    db.Column("guidance", db.Text),
-    db.Column("hint", db.Text),
-    db.Column("entry_date", db.Date),
-    db.Column("start_date", db.Date),
-    db.Column("end_date", db.Date),
-)
+class DatasetField(DateModel):
+    __tablename__ = "dataset_field"
+
+    dataset_id = db.Column(db.Text, db.ForeignKey("dataset.dataset"), primary_key=True)
+    field_id = db.Column(db.Text, db.ForeignKey("field.field"), primary_key=True)
+    guidance = db.Column(db.Text)
+    hint = db.Column(db.Text)
+    description = db.Column(db.Text)
+
+    dataset = db.relationship("Dataset", back_populates="dataset_fields")
+    field = db.relationship("Field", back_populates="field_datasets")
+
 
 specification_dataset = db.Table(
     "specification_dataset",
@@ -146,13 +148,7 @@ class Dataset(DateModel):
     typology = db.relationship("Typology")
     wikidata = db.Column(db.Text)
     wikipedia = db.Column(db.Text)
-    fields = db.relationship(
-        "Field",
-        secondary=dataset_field,
-        lazy="subquery",
-        order_by="Field.field",
-        back_populates="datasets",
-    )
+    dataset_fields = db.relationship("DatasetField", back_populates="dataset")
 
 
 class Typology(DateModel):
@@ -184,13 +180,7 @@ class Field(DateModel):
     typologies = db.relationship(
         "Typology", secondary=typology_field, lazy="subquery", back_populates="fields"
     )
-    datasets = db.relationship(
-        "Dataset",
-        secondary=dataset_field,
-        lazy="subquery",
-        order_by="Dataset.dataset",
-        back_populates="fields",
-    )
+    field_datasets = db.relationship("DatasetField", back_populates="field")
 
     @property
     def typology(self):

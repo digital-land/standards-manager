@@ -20,19 +20,19 @@
         </tr>
       </thead>
       <tbody class="govuk-table__body">
-        {% for field in dataset.fields %}
+        {% for dataset_field in dataset.dataset_fields %}
         <tr class="govuk-table__row">
-          <td class="govuk-table__cell"><a href="{{url_for('specification.field', field=field.field)}}">{{field.field}}</a>
-            {% if field.field == dataset.dataset %}
+          <td class="govuk-table__cell"><a href="{{url_for('specification.field', field=dataset_field.field.field)}}">{{dataset_field.field.field}}</a>
+            {% if dataset_field.field == dataset.dataset %}
               <strong class="govuk-tag govuk-tag--grey">Key</strong>
             {% endif %}
-            {% if field.end_date %}
+            {% if dataset_field.end_date %}
               <strong class="govuk-tag govuk-tag--grey">Deprecated</strong>
             {% endif %}
           </td>
-          <td class="govuk-table__cell">{{field.name}}</td>
-          <td class="govuk-table__cell"><a href="{{url_for('specification.datatype', datatype=field.datatype_id)}}">{{field.datatype_id}}</a></td>
-          <td class="govuk-table__cell">{{field.cardinality}}</td>
+          <td class="govuk-table__cell">{{dataset_field.field.name}}</td>
+          <td class="govuk-table__cell"><a href="{{url_for('specification.datatype', datatype=dataset_field.field.datatype_id)}}">{{dataset_field.field.datatype_id}}</a></td>
+          <td class="govuk-table__cell">{{dataset_field.field.cardinality}}</td>
           </tr>
         {% endfor %}
       </tbody>

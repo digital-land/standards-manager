@@ -1,7 +1,7 @@
-{% macro _render_fields(fields) %}
+{% macro _render_fields(dataset_fields) %}
   <ul class="govuk-list app-list--fields app-list--fields-divided">
-    {% for field in fields %}
-      <li><code class="app-code app-code--field app-code--inline-">{{ field.field }}</code></li>
+    {% for dataset_field in dataset_fields %}
+      <li><code class="app-code app-code--field app-code--inline-">{{ dataset_field.field.field }}</code> {% if dataset_field.description %}{{dataset_field.description|safe}}{% endif %}</li>
     {% endfor %}
   </ul>
 {% endmacro %}
@@ -18,7 +18,7 @@
   <p class="govuk-body">The data MUST contain the following fields:</p>
 
   {{
-    _render_fields(dataset.fields)
+    _render_fields(dataset.dataset_fields)
   }}
 
 {% endmacro %}
