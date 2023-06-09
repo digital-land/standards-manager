@@ -2,6 +2,7 @@ import logging
 import os
 import tempfile
 from csv import DictReader
+from pathlib import Path
 from zipfile import ZipFile
 
 import frontmatter
@@ -107,10 +108,16 @@ def _load_specification_dataset(tmp_dir):
         for i, row in enumerate(DictReader(f)):
             datasets = row["datasets"].split(";")
             for d in datasets:
-                r = {"specification_id": row["specification"], "dataset_id": d}
+                md = _load_guidance_markdown(d)
+                r = {
+                    "specification_id": row["specification"],
+                    "dataset_id": d,
+                    "guidance": md,
+                }
                 try:
                     db.session.execute(specification_dataset.insert(), r)
                     db.session.commit()
+
                 except Exception as e:
                     logger.error(
                         f"Error inserting row {i} of specification.csv into specification_dataset"
@@ -212,3 +219,17 @@ def _get_insert_row(table, row):
             v = val
         insert_row[k] = v
     return insert_row
+
+
+def _load_guidance_markdown(dataset):
+    print(f"loading guidance markdown for {dataset}")
+    base_path = Path(os.path.realpath(__file__)).parent.parent
+    guidance_markdown_dir = os.path.join(base_path, "markdown")
+    markdown_path = os.path.join(guidance_markdown_dir, f"{dataset}.md")
+    print("load data from markdown", markdown_path)
+    if os.path.exists(markdown_path):
+        markdown_file = Path(os.path.join(guidance_markdown_dir, f"{dataset}.md"))
+        content = markdown_file.read_text()
+        return content
+    else:
+        return None
