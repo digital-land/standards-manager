@@ -4,8 +4,8 @@
   <p class="govuk-body">There are {{dataset_count}} datasets you must provide for {{specification.plural}}:</p>
 
   <ul class="govuk-list govuk-list--bullet">
-    {% for dataset in specification.datasets %}
-      <li><a class="govuk-link" href="#{{dataset.dataset}}-dataset">{{dataset.dataset.replace("-", " ")}} dataset</a></li>
+    {% for sd in specification.specification_datasets %}
+      <li><a class="govuk-link" href="#{{sd.dataset.dataset}}-dataset">{{sd.dataset.dataset.replace("-", " ")}} dataset</a></li>
     {% endfor %}
   </ul>
   <h2 class="govuk-heading-l" id="format">Format</h2>
@@ -19,4 +19,19 @@
   <p class="govuk-body">For more information, see <a class="govuk-link" href="{{url_for('guidance.page', page_name='how-to-provide-data')}}">how to provide your
       data</a>.</p>
   <hr class="govuk-section-break govuk-section-break--l" />
+
+  {% for sd in specification.specification_datasets %}
+    <h2 class="govuk-heading-l" id="{{sd.dataset.dataset}}-dataset">{{sd.dataset.name}} dataset</h2>
+
+    <p>This dataset is about conservation areas. These are areas where extra planning controls apply due to their special
+    architectural and historic interest.</p>
+
+    <p>The dataset must contain at least one entry (row) for each {{sd.dataset.name.lower()}}</p>
+
+    <p>It must containing the following fields (columns):</p>
+
+  {% endfor %}
+
+
+
 {% endblock %}

@@ -72,19 +72,19 @@ class DatasetField(DateModel):
     field = db.relationship("Field", back_populates="field_datasets")
 
 
-specification_dataset = db.Table(
-    "specification_dataset",
-    db.Column("dataset", db.Text, db.ForeignKey("dataset.dataset"), primary_key=True),
-    db.Column(
-        "specification",
-        db.Text,
-        db.ForeignKey("specification.specification"),
-        primary_key=True,
-    ),
-    db.Column("entry_date", db.Date),
-    db.Column("start_date", db.Date),
-    db.Column("end_date", db.Date),
-)
+class SpecificationDataset(DateModel):
+    __tablename__ = "specification_dataset"
+
+    dataset_id = db.Column(db.Text, db.ForeignKey("dataset.dataset"), primary_key=True)
+    specification_id = db.Column(
+        db.Text, db.ForeignKey("specification.specification"), primary_key=True
+    )
+    guidance = db.Column(db.Text)
+    dataset = db.relationship("Dataset", back_populates="dataset_specifications")
+    specification = db.relationship(
+        "Specification", back_populates="specification_datasets"
+    )
+
 
 specification_dataset_field = db.Table(
     "specification_dataset_field",
@@ -122,8 +122,8 @@ class Specification(DateModel):
     prefix = db.Column(db.Text)
     plural = db.Column(db.Text)
     diagram = db.Column(db.Text)
-    datasets = db.relationship(
-        "Dataset", secondary=specification_dataset, lazy="subquery"
+    specification_datasets = db.relationship(
+        "SpecificationDataset", back_populates="specification"
     )
 
 
@@ -149,6 +149,9 @@ class Dataset(DateModel):
     wikidata = db.Column(db.Text)
     wikipedia = db.Column(db.Text)
     dataset_fields = db.relationship("DatasetField", back_populates="dataset")
+    dataset_specifications = db.relationship(
+        "SpecificationDataset", back_populates="dataset"
+    )
 
 
 class Typology(DateModel):

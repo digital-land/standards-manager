@@ -53,7 +53,7 @@ def specification(specification_id):
     specification = Specification.query.get(specification_id)
     if specification is None:
         return abort(404)
-    dataset_count = len(specification.datasets)
+    dataset_count = len(specification.specification_datasets)
     page_data = {
         "page_title": specification.name,
         "themes": themes,

@@ -31,6 +31,7 @@ foreign_keys = {
     "typology",
     "dataset",
     "field",
+    "specification",
 }
 
 
@@ -106,7 +107,7 @@ def _load_specification_dataset(tmp_dir):
         for i, row in enumerate(DictReader(f)):
             datasets = row["datasets"].split(";")
             for d in datasets:
-                r = {"specification": row["specification"], "dataset": d}
+                r = {"specification_id": row["specification"], "dataset_id": d}
                 try:
                     db.session.execute(specification_dataset.insert(), r)
                     db.session.commit()
@@ -119,11 +120,11 @@ def _load_specification_dataset(tmp_dir):
 
         specification_dataset_field = db.metadata.tables["specification_dataset_field"]
         for specification in Specification.query.all():
-            for d in specification.datasets:
-                for f in d.dataset_fields:
+            for sd in specification.specification_datasets:
+                for f in sd.dataset.dataset_fields:
                     r = {
                         "specification": specification.specification,
-                        "dataset": d.dataset,
+                        "dataset": sd.dataset.dataset,
                         "field": f.field.field,
                     }
                     try:
