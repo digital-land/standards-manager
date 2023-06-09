@@ -8,3 +8,5 @@ Flask-Migrate
 requests
 Markdown
 python-frontmatter
+beautifulsoup4
+python-slugify

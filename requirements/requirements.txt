@@ -6,6 +6,8 @@
 #
 alembic==1.11.1
     # via flask-migrate
+beautifulsoup4==4.12.2
+    # via -r requirements/requirements.in
 blinker==1.6.2
     # via flask
 certifi==2023.5.7
@@ -58,14 +60,20 @@ python-dotenv==1.0.0
     # via -r requirements/requirements.in
 python-frontmatter==1.0.0
     # via -r requirements/requirements.in
+python-slugify==8.0.1
+    # via -r requirements/requirements.in
 pyyaml==6.0
     # via python-frontmatter
 requests==2.31.0
     # via -r requirements/requirements.in
+soupsieve==2.4.1
+    # via beautifulsoup4
 sqlalchemy==2.0.15
     # via
     #   alembic
     #   flask-sqlalchemy
+text-unidecode==1.3
+    # via python-slugify
 typing-extensions==4.6.0
     # via
     #   alembic
