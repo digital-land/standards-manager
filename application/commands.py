@@ -7,9 +7,11 @@ from zipfile import ZipFile
 
 import frontmatter
 import requests
+from bs4 import BeautifulSoup
 from flask.cli import AppGroup
 from sqlalchemy import and_, update
 
+import markdown
 from application.extensions import db
 from application.models import Specification
 
@@ -104,35 +106,44 @@ def _load_specification_dataset(tmp_dir):
         tmp_dir, "specification-main/specification/specification.csv"
     )
     specification_dataset = db.metadata.tables["specification_dataset"]
+    specification_dataset_field = db.metadata.tables["specification_dataset_field"]
+    dataset_field_guidance = {}
     with open(specification_csv) as f:
         for i, row in enumerate(DictReader(f)):
             datasets = row["datasets"].split(";")
             for d in datasets:
                 md = _load_guidance_markdown(d)
-                r = {
-                    "specification_id": row["specification"],
-                    "dataset_id": d,
-                    "guidance": md,
-                }
-                try:
-                    db.session.execute(specification_dataset.insert(), r)
-                    db.session.commit()
+                if md is not None:
+                    specification = row["specification"]
+                    r = {
+                        "specification_id": specification,
+                        "dataset_id": d,
+                        "guidance": md["guidance"],
+                    }
+                    try:
+                        db.session.execute(specification_dataset.insert(), r)
+                        db.session.commit()
 
-                except Exception as e:
-                    logger.error(
-                        f"Error inserting row {i} of specification.csv into specification_dataset"
-                    )
-                    logger.error(e)
-                    db.session.rollback()
+                    except Exception as e:
+                        logger.error(
+                            f"Error inserting row {i} of specification.csv into specification_dataset"
+                        )
+                        logger.error(e)
+                        db.session.rollback()
 
-        specification_dataset_field = db.metadata.tables["specification_dataset_field"]
+                    dataset_field_guidance[d] = md["field_guidance"]
+
         for specification in Specification.query.all():
             for sd in specification.specification_datasets:
                 for f in sd.dataset.dataset_fields:
+                    guidance = dataset_field_guidance.get(sd.dataset.dataset, None)
+                    if guidance is not None:
+                        guidance = guidance.get(f.field.field, None)
                     r = {
                         "specification": specification.specification,
                         "dataset": sd.dataset.dataset,
                         "field": f.field.field,
+                        "guidance": guidance,
                     }
                     try:
                         db.session.execute(specification_dataset_field.insert(), r)
@@ -230,6 +241,23 @@ def _load_guidance_markdown(dataset):
     if os.path.exists(markdown_path):
         markdown_file = Path(os.path.join(guidance_markdown_dir, f"{dataset}.md"))
         content = markdown_file.read_text()
-        return content
+        html = markdown.markdown(content)
+        soup = BeautifulSoup(html, "html.parser")
+        field_guidance = {}
+        h3_headings = soup.find_all("h3")
+        for h3 in h3_headings:
+            field = h3.text
+            guidance_list = []
+            for element in h3.next_elements:
+                if element.name == "h3":
+                    break
+                else:
+                    guidance_list.append(element.text)
+
+            guidance = "\n".join(guidance_list)
+            field_guidance[field] = guidance
+            guidance_list = []
+
+        return {"guidance": content, "field_guidance": field_guidance}
     else:
         return None
