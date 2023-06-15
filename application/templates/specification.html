@@ -61,8 +61,8 @@
       The documentation page MUST include:
     </p>
     <ul class="govuk-list govuk-list--bullet">
-      {% for dataset in specification.datasets %}
-        <li>A hyperlink to the <a href="#{{dataset.dataset}}-dataset">{{dataset.dataset.replace("-", " ")}}</a> data</li>
+      {% for sd in specification.specification_datasets %}
+        <li>A hyperlink to the <a href="#{{sd.dataset.dataset}}-dataset">{{sd.dataset.dataset.replace("-", " ")}}</a> data</li>
       {% endfor %}
       <li>A clear licence for reusing the data, for example [<a href="#OGL3">OGL3</a>].</li>
       <li>Any attribution needed when using the data, for example [<a href="#crown-copyright">Crown Copyright</a>].</li>
@@ -77,8 +77,8 @@
 
   <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 
-  {% for dataset in specification.datasets %}
-    {{ render_dataset({'dataset': dataset}) }}
+  {% for sd in specification.specification_datasets %}
+    {{ render_dataset({'dataset': sd.dataset}) }}
   {% endfor %}
 
   {% with specification=specification %}
