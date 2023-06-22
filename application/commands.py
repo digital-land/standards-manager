@@ -254,7 +254,7 @@ def _load_guidance_markdown(dataset):
                 else:
                     guidance_list.append(sibling.text)
 
-            guidance = "".join(guidance_list)
+            guidance = "\n".join(guidance_list)
             field_guidance[field] = guidance
 
         return {"guidance": content, "field_guidance": field_guidance}
