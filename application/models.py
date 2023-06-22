@@ -86,18 +86,23 @@ class SpecificationDataset(DateModel):
     )
 
 
-specification_dataset_field = db.Table(
-    "specification_dataset_field",
-    db.Column("dataset", db.Text, db.ForeignKey("dataset.dataset"), primary_key=True),
-    db.Column(
-        "specification",
+class SpecificationDatasetField(DateModel):
+    __tablename__ = "specification_dataset_field"
+
+    dataset_id = db.Column(db.Text, db.ForeignKey("dataset.dataset"), primary_key=True)
+    specification_id = db.Column(
         db.Text,
         db.ForeignKey("specification.specification"),
         primary_key=True,
-    ),
-    db.Column("field", db.Text, db.ForeignKey("field.field"), primary_key=True),
-    db.Column("guidance", db.Text),
-)
+    )
+    field_id = db.Column(db.Text, db.ForeignKey("field.field"), primary_key=True)
+    guidance = db.Column(db.Text)
+    specification = db.relationship(
+        "Specification", back_populates="specification_dataset_fields"
+    )
+    dataset = db.relationship("Dataset", back_populates="specification_dataset_fields")
+    field = db.relationship("Field", back_populates="specification_dataset_fields")
+
 
 typology_field = db.Table(
     "typology_field",
@@ -125,6 +130,9 @@ class Specification(DateModel):
     specification_datasets = db.relationship(
         "SpecificationDataset", back_populates="specification"
     )
+    specification_dataset_fields = db.relationship(
+        "SpecificationDatasetField", back_populates="specification"
+    )
 
 
 class Dataset(DateModel):
@@ -151,6 +159,9 @@ class Dataset(DateModel):
     dataset_fields = db.relationship("DatasetField", back_populates="dataset")
     dataset_specifications = db.relationship(
         "SpecificationDataset", back_populates="dataset"
+    )
+    specification_dataset_fields = db.relationship(
+        "SpecificationDatasetField", back_populates="dataset"
     )
 
 
@@ -184,6 +195,9 @@ class Field(DateModel):
         "Typology", secondary=typology_field, lazy="subquery", back_populates="fields"
     )
     field_datasets = db.relationship("DatasetField", back_populates="field")
+    specification_dataset_fields = db.relationship(
+        "SpecificationDatasetField", back_populates="field"
+    )
 
     @property
     def typology(self):

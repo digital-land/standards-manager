@@ -30,7 +30,10 @@
 
     <p>It must containing the following fields (columns):</p>
 
-    {{sd.guidance|render_markdown(gov_attributes=True)}}
+    {% for spec_dataset_field in sd.dataset.specification_dataset_fields %}
+      <h3 class="govuk-heading-m">{{spec_dataset_field.field_id}}</h3>
+      {{spec_dataset_field.guidance|render_markdown(gov_attributes=True)}}
+    {% endfor %}
 
   {% endfor %}
 
