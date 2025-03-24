@@ -1,4 +1,10 @@
-# specification-service
+# standards manager
+
+# ⚠️ Inactive
+
+This application is no longer deployed anywhere. The data collected during it's use has
+been backed up and is available in [data/database_backup.dump](data/database_backup.dump)
+
 
 
 ## Getting started
